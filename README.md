@@ -1,4 +1,4 @@
-# bythefire_colorpicker
+# colorpicker
 
 A new Flutter project.
 
