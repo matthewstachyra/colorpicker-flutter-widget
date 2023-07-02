@@ -29,7 +29,7 @@ class _GradientColorPickerState extends State<GradientColorPicker> {
     return selectedColor!;
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -39,6 +39,7 @@ class _GradientColorPickerState extends State<GradientColorPicker> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                width: 200,
                 height: 200,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -47,8 +48,16 @@ class _GradientColorPickerState extends State<GradientColorPicker> {
                       Colors.green,
                       Colors.blue,
                     ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
                 ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                width: 50,
+                height: 200,
+                color: _selectedColor,
               ),
             ],
           ),
@@ -57,6 +66,7 @@ class _GradientColorPickerState extends State<GradientColorPicker> {
     );
   }
 }
+
 
 void main() {
   runApp(
