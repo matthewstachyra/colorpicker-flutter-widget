@@ -33,11 +33,6 @@ class GradientColorPicker extends StatefulWidget {
 class _GradientColorPickerState extends State<GradientColorPicker> {
   double _selectedPosition = 0.5;
 
-  Color _getColorFromPosition(double position) {
-    final int red = (255 - (255 * position)).round();
-    final int blue = (255 * position).round();
-    return Color.fromRGBO(red, 0, blue, 1.0);
-  }
 
   void _updateSelectedPosition(Offset position, BoxConstraints constraints) {
     final double newPosition = position.dy / constraints.maxHeight;
@@ -58,7 +53,7 @@ class _GradientColorPickerState extends State<GradientColorPicker> {
             _updateSelectedPosition(details.localPosition, constraints);
           },
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.red, Colors.blue],
                 begin: Alignment.topCenter,
@@ -79,10 +74,18 @@ class _GradientColorPickerState extends State<GradientColorPicker> {
 }
 
 class _SelectedColorPainter extends CustomPainter {
+  /// gray bar that indicates current color on gradient.
   final double position;
   final double width;
 
   _SelectedColorPainter(this.position, this.width);
+
+  // use this method to get the color from the position of indicator.
+  Color _getColorFromPosition(double position) {
+    final int red = (255 - (255 * position)).round();
+    final int blue = (255 * position).round();
+    return Color.fromRGBO(red, 0, blue, 1.0);
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -105,11 +108,11 @@ class _SelectedColorPainter extends CustomPainter {
       Radius.circular(barHeight / 2),
     );
 
-    final Paint selectedColorPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.7)
+    final Paint bar = Paint()
+      ..color = _getColorFromPosition(position).withOpacity(0.7)
       ..style = PaintingStyle.fill;
 
-    canvas.drawRRect(lineRRect, selectedColorPaint);
+    canvas.drawRRect(lineRRect, bar);
   }
 
   @override
